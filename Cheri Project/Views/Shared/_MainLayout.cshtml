@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheri</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/Style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="login col-sm-12 col-md-12 col-lg-12 d-flex justify-content-between">
+                <span class="icons my-3">
+                    <a href="https://www.facebook.com/">
+                        <i class="bi bi-facebook mx-3 fs-4 " ></i>
+                    </a>
+                    <a href="https://www.twitter.com/">
+                        <i class="bi bi-twitter mx-3 fs-4  "></i>
+                    </a>
+                    <a href="https://www.linkedin.com/">
+                        <i class="bi bi-linkedin mx-3 fs-4  "></i>
+                    </a>
+                    <a href="https://www.pinterest.com/">
+                        <i class="bi bi-pinterest mx-3 fs-4  "></i>
+                    </a>
+                </span>
+                <span class="mx-auto my-3">
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <a class="" asp-controller="Account" asp-action="AddAdmin">
+                                <i class="bi bi-person-plus fs-4 mx-3"></i>
+                                Add Admin
+                            </a>
+                            <a asp-controller="Product" asp-action="New">
+                                <i class="bi bi-plus-square-dotted fs-4 mx-3"></i>
+                                Add New Product
+                            </a> 
+                        }
+                </span>
+                <span class="profile my-3">
+                <i class="bi bi-person-circle mx-3 fs-4 "></i>
+                @if (User.Identity.IsAuthenticated == true)
+                        {
+                            <span>
+                                 <a class="text-dark me-4" > @User.Identity.Name</a>
+                            </span>
+                            <span>
+                                <a class="h5 loginLink" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </span>
+                        }else{
+                            <a class="h5 loginLink" asp-controller="Account" asp-action="Login">Login</a>
+                        }
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-4 text-sm-center text-md-center">
+                <a class="h1 logo" asp-controller="Home" asp-action="Index">Cheri <span class="dot_design">.</span></a>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 mt-4">
+                <div>
+                    <form asp-controller="Search" asp-action="Index">
+                    <input name="Search" class="form-control" type="text" placeholder="What Do You Need ?">
+                    <button class="button w-100" type="submit">
+                            <i class="bi bi-search text-white"></i>
+                    </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-3 mt-4 ms-lg-5 text-sm-center text-md-center ">
+                @*<a >
+                    <i class="bi bi-heart"></i>
+                    <span class="badge badge-warning lblCartCount"> 5 </span>
+                </a>*@
+                <a asp-controller="ProductOrder" asp-action="ProductCart">
+                    <i class="bi bi-cart"></i>
+                    <span class="badge badge-warning lblCartCount">@ViewBag.count </span>
+
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 my-4">
+                <ul class="nav nav-pills nav-fill ">
+                    <li class="nav-item">
+                        <a class="nav-link  " aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    @foreach (var item in ViewBag.Category)
+                   {
+                    <li class="nav-item">
+                        <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+                    </li>
+                   }
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Collection</a>
+                        <ul class="dropdown-menu">
+                            @foreach (var item in ViewBag.SubCategory)
+                           {
+                               <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+                           }
+                            <hr/>
+                            @if(User.IsInRole("Admin"))
+                             {
+                            <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+                             }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <section>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div id="carouselExampleInterval" class="carousel slide " data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="10000">
+                            <img src="/Images/istockphoto-1300966679-170667a.jpg" class=" d-block w-100 " alt="... ">
+                        </div>
+                        <div class="carousel-item " data-bs-interval="2000 ">
+                            <img src="/Images/italian-men-930x620.jpg " class="d-block w-100 " alt="... ">
+                        </div>
+                        <div class="carousel-item ">
+                            <img src="/Images/istockphoto-1295853778-170667a.jpg " class="d-block w-100 " alt="... ">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleInterval " data-bs-slide="prev ">
+        <span class="carousel-control-prev-icon  " aria-hidden="true"></span>
+        <span class="visually-hidden ">Previous</span>
+        </button>
+                    <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleInterval " data-bs-slide="next ">
+        <span class="carousel-control-next-icon " aria-hidden="true"></span>
+        <span class="visually-hidden ">Next</span>
+        </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                <p class="h3 p-5 text-center">Women’s</p>
+             </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-12 col-md-12 col-lg-12 d-flex flex-row flex-wrap justify-content-center">
+               @foreach (var item in ViewBag.Women)
+              {
+                <div class="card mx-2 my-2 text-center" style="width: 18rem;">
+                    <a href="/Product/Details/@item.ID">
+                        <img src="/ProductImages/@item.Image" class="card-img-top" alt="...">
+                    </a>
+                    <div class="card-body">
+                    <h6 class="card-title">@item.ProductName</h6>
+                    <p class="fs-3" style="color:orange;" >@item.ProductPrice EGP</p>
+                    <a asp-controller="ProductOrder" asp-action="Insert" asp-route-id="@item.ID" class="btn btn-danger text-white">Add To Cart</a>
+                    </div>
+                </div>
+              }
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-sm-12 col-md-12 col-lg-12 men">
+                <p class="h3 p-5 text-center">Men’s</p>
+            </div>
+        </div>
+            <div class="row ">
+            <div class="col-sm-12 col-md-12 col-lg-12 d-flex flex-row flex-wrap justify-content-center">
+               @foreach (var item in ViewBag.Men)
+              {
+                <div class="card mx-2 my-2 text-center" style="width: 18rem;">
+                    <a href="/Product/Details/@item.ID">
+                        <img src="/ProductImages/@item.Image" class="card-img-top" alt="...">
+                    </a>
+                    <div class="card-body">
+                    <h6 class="card-title">@item.ProductName</h6>
+                    <p class="fs-3" style="color:orange;" >@item.ProductPrice EGP</p>
+                    <a asp-controller="ProductOrder" asp-action="Insert" asp-route-id="@item.ID" class="btn btn-danger text-white">Add To Cart</a>
+                    </div>
+                </div>
+              }
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <p class="h3 p-5 text-center">Kid’s</p>
+            </div>
+        </div>
+            <div class="row ">
+            <div class="col-sm-12 col-md-12 col-lg-12 d-flex flex-row flex-wrap justify-content-center">
+               @foreach (var item in ViewBag.Kid)
+              {
+                <div class="card mx-2 my-2 text-center" style="width: 18rem;">
+                    <a href="/Product/Details/@item.ID">
+                        <img src="/ProductImages/@item.Image" class="card-img-top" alt="...">
+                    </a>
+                    <div class="card-body">
+                    <h6 class="card-title">@item.ProductName</h6>
+                    <p class="fs-3" style="color:orange;" >@item.ProductPrice EGP</p>
+                    <a asp-controller="ProductOrder" asp-action="Insert" asp-route-id="@item.ID" class="btn btn-danger text-white">Add To Cart</a>
+                    </div>
+                </div>
+              }
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-sm-center text-md-center">
+            <a class="h1 logo" href="#">Cheri <span class="dot_design">.</span></a>
+            <div class="icons ">
+                <a href="#">
+                    <i class="bi bi-facebook mx-3 fs-4 my-3"></i>
+                </a>
+                <a href="#">
+                    <i class="bi bi-twitter mx-3 fs-4 my-3 "></i>
+                </a>
+                <a href="#">
+                    <i class="bi bi-linkedin mx-3 fs-4 my-3"></i>
+                </a>
+                <a href="#">
+                    <i class="bi bi-pinterest mx-3 fs-4 my-3"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js " integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4 " crossorigin="anonymous "></script>
+</body>
+
+</html>

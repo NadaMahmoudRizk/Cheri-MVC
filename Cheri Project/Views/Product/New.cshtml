@@ -1,0 +1,76 @@
+﻿@model Cheri_Project.Models.Product
+
+@{
+    Layout = "_HeaderFooterLayout";
+    SelectList cat = new SelectList(ViewBag.cat, "ID", "CategoryName");
+    SelectList sub = new SelectList(ViewBag.sub, "ID", "SubCategoryName");
+
+}
+<div class="container">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-lg-12 text-center">
+        <form asp-controller="Product" asp-action="Insert" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label my-3"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductDescription" class="control-label my-3"></label>
+                <input asp-for="ProductDescription" class="form-control" />
+                <span asp-validation-for="ProductDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductPrice" class="control-label my-3"></label>
+                <input asp-for="ProductPrice" class="form-control" />
+                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Category_ID" class="control-label my-3"></label>
+                <select asp-for="Category_ID" class ="form-control" asp-items="cat"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubCategory_ID" class="control-label my-3"></label>
+                <select asp-for="SubCategory_ID" class ="form-control" asp-items="sub"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label my-3"></label>
+                <input name="File" type="file" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <input type="submit" value="Add" class="btn btn-danger form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+@section Count{
+    @ViewBag.count
+}
+@section Collection{
+    @foreach (var item in ViewBag.SubCategory)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+        }
+        <hr/>
+        @if(User.IsInRole("Admin"))
+        {
+        <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+        }
+}
+
+@section Category{
+    @foreach (var item in ViewBag.Category)
+        {
+        <li class="nav-item">
+            <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+        </li>
+        }
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

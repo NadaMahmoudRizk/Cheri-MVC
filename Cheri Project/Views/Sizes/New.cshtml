@@ -1,0 +1,27 @@
+﻿@model Product
+
+@{
+    Layout = "_Layout";
+
+}
+<h1>New</h1>
+<h4>size</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Sizes" asp-action="Insert" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group my-3">
+                <label  class="control-label">SizeName</label>
+                <input name="SizeName" class="form-control my-3" />
+            </div>
+            <div class="form-group my-3">
+                <label class="control-label my-3">Product</label>
+                <input class="form-control" type="text" value="@Model.ID" name="Product_ID" readonly/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

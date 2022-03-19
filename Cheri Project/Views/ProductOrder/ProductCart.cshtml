@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "_HeaderFooterLayout";
+}
+@model List<Product_Order>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <table class="table text-center table-hover  mx-auto shadow-lg p-3 mb-5 bg-white rounded" >
+    <thead>
+    <tr >
+        <th class="font-weight-bolder" scope="col">Image</th>
+        <th class="font-weight-bolder" scope="col">Size</th>
+        <th class="font-weight-bolder" scope="col">Color</th>
+        <th class="font-weight-bolder" scope="col">Quantity</th>
+        <th class="font-weight-bolder" scope="col">Price</th>
+        <th class="font-weight-bolder" scope="col"></th>
+
+    </tr>
+    </thead>
+    <tbody>
+ @foreach(var std in Model)
+      {
+    <tr class="my-auto">
+        <td class=" text-center font-weight-bold"><img src="~/ProductImages/@std.Product.Image" style="width:60px;height:70px" /></td>
+        <td class=" text-center font-weight-bold">@std.Size</td>
+        <td class=" text-center font-weight-bold">@std.Color</td>
+        <td class=" text-center font-weight-bold">@std.TotalStock</td>
+        <td class=" text-center font-weight-bold">@std.TotalPrice</td>
+        <td class=" text-center font-weight-bold"><a class="text-danger" href="/ProductOrder/Delete/@std.OrderID" onclick="Delete()">
+            <i class="bi bi-trash fs-5"></i>
+            </a></td>
+    </tr>
+      }         
+    </tbody>
+ </table>
+        </div>
+
+    </div>
+
+</div>
+
+@section Count{
+    @ViewBag.count
+}
+
+@section Collection{
+    @foreach (var item in ViewBag.SubCategory)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+        }
+        <hr/>
+        @if(User.IsInRole("Admin"))
+        {
+        <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+        }
+}
+@section Category{
+    @foreach (var item in ViewBag.Category)
+        {
+        <li class="nav-item">
+            <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+        </li>
+        }
+}
+
+<script>
+    function Delete()
+    {
+        console.log("test")
+        var respond=confirm("Do you want to Delete");
+        if(!respond)
+        {
+             event.preventDefault();
+        }
+    
+    };
+</script>

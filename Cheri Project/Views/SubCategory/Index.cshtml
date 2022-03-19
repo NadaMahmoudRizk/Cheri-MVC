@@ -1,0 +1,51 @@
+﻿@model List<SubCategory>
+<div class="container">
+<div style="border-bottom:1px solid red;text-align:center;box-shadow:red"class="shadow-lg p-3 mb-5 bg-white rounded" id="index">
+    <h2 style="text-align:center;margin:5px">SUB CATEGORIES</h2>
+</div>
+<table class="table text-center table-hover  mx-auto shadow-lg p-3 mb-5 bg-white rounded" >
+    <thead>
+    <tr >
+        <th class="font-weight-bolder" scope="col">Name</th>
+        <th class="font-weight-bolder" scope="col">CategoryName</th>
+        <th class="font-weight-bolder" scope="col">Edit Data</th>
+        <th class="font-weight-bolder" scope="col">Delete Data</th>
+
+    </tr>
+    </thead>
+    <tbody>
+ @foreach(var std in Model)
+      {
+    <tr >
+        <td class=" text-center font-weight-bold">@std.SubCategoryName</td>
+        <td class=" text-center font-weight-bold">@std.Categories.CategoryName</td>
+        <td class=" text-center font-weight-bold"><a class="text-danger" href="/SubCategory/Edit/@std.ID">Edit @std.SubCategoryName</a></td>
+        <td class=" text-center font-weight-bold">
+            <button class="btn btn-danger" id="btn"  >
+            <a style="text-decoration:none; color:white;" href="/SubCategory/Delete/@std.ID" onclick="Delete()" >Delete</a>
+            </button>
+        </td>
+    </tr>
+      }         
+    </tbody>
+ </table>
+
+ <button style="border-radius:20px;" class="mt-3 btn btn-danger shadow-lg p-3 mb-5 rounded ">
+    <a  href="/SubCategory/New" style="text-decoration:none; color:white;">Add New SubCategory</a>
+</button>
+
+</div>
+
+
+<script>
+    function Delete()
+    {
+        console.log("test")
+        var respond=confirm("Do you want to Delete");
+        if(!respond)
+        {
+             event.preventDefault();
+        }
+    
+    };
+</script>

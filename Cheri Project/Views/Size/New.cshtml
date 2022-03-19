@@ -1,0 +1,48 @@
+﻿@model Product
+@{
+    Layout = "_HeaderFooterLayout";
+}
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-lg-12 text-center">
+        <form asp-controller="Size" asp-action="Insert" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group my-3">
+                <label class="control-label my-3">Size</label>
+                <input name="SizeName" class="form-control" />
+            </div>
+            <div class="form-group my-3">
+                <label class="control-label my-3">Product</label>
+                 <input class="form-control" type="text"  value="@Model.ID" name="Product_ID" readonly />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ADD" class="btn btn-danger form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+@section Count{
+    @ViewBag.count
+}
+@section Collection{
+    @foreach (var item in ViewBag.SubCategory)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+        }
+        <hr/>
+        @if(User.IsInRole("Admin"))
+        {
+        <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+        }
+}
+
+@section Category{
+    @foreach (var item in ViewBag.Category)
+        {
+        <li class="nav-item">
+            <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+        </li>
+        }
+}

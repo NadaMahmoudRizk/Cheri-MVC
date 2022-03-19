@@ -1,0 +1,44 @@
+﻿@model List<Product>
+@{
+    Layout = "_HeaderFooterLayout";
+}
+<div class="row ">
+    <div class="col-sm-12 col-md-12 col-lg-12 d-flex flex-row flex-wrap justify-content-center">
+        @foreach (var item in Model)
+        {
+        <div class="card mx-2 my-2 text-center" style="width: 18rem;">
+            <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ID">
+                <img src="/ProductImages/@item.Image" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+            <h6 class="card-title">@item.ProductName</h6>
+            <p class="fs-3" style="color:orange;" >@item.ProductPrice EGP</p>
+            <a href="#" class="btn btn-danger text-white">Add To Cart</a>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+@section Count{
+    @ViewBag.count
+}
+@section Collection{
+    @foreach (var item in ViewBag.SubCategory)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+        }
+        <hr/>
+        @if(User.IsInRole("Admin"))
+        {
+        <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+        }
+}
+
+@section Category{
+    @foreach (var item in ViewBag.Category)
+        {
+        <li class="nav-item">
+            <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+        </li>
+        }
+}

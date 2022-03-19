@@ -1,0 +1,58 @@
+﻿@model Cheri_Project.Models.Categories
+
+@{
+    ViewData["Title"] = "New";
+    Layout = "_HeaderFooterLayout";
+
+}
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 text-center">
+        <form asp-controller="Category" asp-action="Insert" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group my-3">
+                <label asp-for="CategoryName" class="control-label my-3"></label>
+                <input asp-for="CategoryName" class="form-control" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="CategoryImage" class="control-label"></label>
+                <input name="File" type="file" class="form-control my-3" />
+            </div>
+            <div class="form-group my-3">
+                <input type="submit" value="ADD" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+@section Count{
+    @ViewBag.count
+}
+
+@section Collection{
+    @foreach (var item in ViewBag.SubCategory)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+        }
+        <hr/>
+        @if(User.IsInRole("Admin"))
+            {
+                <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+            }
+}
+
+@section Category{
+    @foreach (var item in ViewBag.Category)
+        {
+        <li class="nav-item">
+            <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+        </li>
+        }
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

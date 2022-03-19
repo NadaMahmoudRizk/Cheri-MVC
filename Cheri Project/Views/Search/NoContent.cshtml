@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = "_HeaderFooterLayout";
+}
+<div class="row ">
+    <div class="col-sm-12 col-md-12 col-lg-12 d-flex flex-row flex-wrap justify-content-center">
+        <h3>No Result</h3>
+    </div>
+</div>
+
+@section Collection{
+    @foreach (var item in ViewBag.SubCategory)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+        }
+        <hr/>
+        @if(User.IsInRole("Admin"))
+        {
+        <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+        }
+}
+
+@section Count{
+    @ViewBag.count
+}
+@section Category{
+    @foreach (var item in ViewBag.Category)
+        {
+        <li class="nav-item">
+            <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+        </li>
+        }
+}

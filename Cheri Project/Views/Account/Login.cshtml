@@ -1,0 +1,41 @@
+﻿@model Cheri_Project.ViewModel.LoginViewModel
+
+@{
+    Layout = "_LoginRegisterLayout";
+}
+<div class="container">
+<div class="row ">
+    <div class="col-md-12 col-sm-12 col-lg-12 d-flex justify-content-center text-center">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group ">
+                <label asp-for="username" class="control-label"></label>
+                <input asp-for="username" class="form-control my-3" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+            <div class="form-group ">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control my-3" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check ">
+                <label class="form-check-label">
+                    <input class="form-check-input my-3" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+                </label>
+            </div>
+            <div class="form-group my-3">
+                <input type="submit" value="Login" class="btn btn-danger form-control" />
+            </div>
+            <div class="form-group my-3">
+                <a asp-controller="Account" asp-action="Register">Create Account</a>
+            </div>
+            </form>
+            </div>
+            </div>
+             </div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,129 @@
+﻿@model Product
+@{
+    Layout = "_HeaderFooterLayout";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-2 text-center">
+            <div class="d-flex flex-column text-center justify-content-center">
+                @foreach (var item in ViewBag.Img)
+               {
+                    <img id="Img2" src="/ProductImages/@item.ImageName"/>
+
+               }
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 text-sm-center text-md-center">
+            <img id="Img1" src="/ProductImages/@Model.Image" style="width:520px;height:850px"/>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 offset-1 p-lg-5 my-sm-5 my-md-5">
+             @if (User.IsInRole("Admin"))
+            {
+            <div class="dropdown text-end">
+                <button class="ms-auto bg-transparent" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <i class="bi bi-three-dots fs-3" ></i>
+                </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a asp-controller="Image" asp-action="New" asp-route-id="@Model.ID" aria-label="Upload Image" >
+                                <i class="bi bi-images my-auto fs-3 mx-auto" ></i>
+                                <span class="ms-3">Add Image</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Size" asp-action="New" asp-route-id="@Model.ID" aria-label="Upload Size">
+                                <i class="bi bi-plus-circle my-auto fs-3 mx-auto"></i>
+                                <span class="ms-3">Add Size</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Color" asp-action="New" asp-route-id="@Model.ID" aria-label="Upload Color">
+                                <i class="bi bi-palette my-auto fs-3 mx-auto"></i>
+                                <span class="ms-3">Add Color</span>
+                            </a>
+                        </li>
+                        <hr />
+                        <li>
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.ID">
+                                Delete Product
+                            </a>
+                        </li>
+                    </ul>
+            </div>
+                }
+            @*<a href="#" aria-label="Add To Favourite" >
+                <i class="bi bi-heart my-auto " style="text-align:end"></i>
+            </a>*@
+
+            
+            <h4 class=" my-4">@Model.ProductName</h4>
+            <div class="row my-4">
+                <span class="fs-4">
+                 <i class="bi bi-text-left text-warning fs-3"></i>
+                 Product Description</span>
+                <p class="fs-5 w-50">@Model.ProductDescription</p>
+            </div>
+            <form  method="get">
+                 <div class="row my-4">
+                    <p class="fs-4">Sizes</p>
+                    <div class="form-group">
+                    <select name="Size" class="form-control">
+                    @foreach (var item in ViewBag.Size)
+                   {
+                       <option value="@item.SizeName" >@item.SizeName</option>                    
+                   }
+                   </select>
+                   </div>
+                </div>
+                 <div class="row my-4">
+                    <p class="fs-4">Colors</p>
+                    <div class="form-group">
+                    <select name="Color" class="form-control">
+                    @foreach (var item in ViewBag.Color)
+                   {
+                       <option value="@item.ColorName" style="color:@item.ColorName">@item.ColorName</option>                    
+                   }
+                   </select>
+                   </div>
+                </div>
+                <div class="row my-4">
+                    <p class="fs-2 text-center" style="color:Orange" >@Model.ProductPrice EGP</p>
+                </div>
+                 <div class="row my-4">
+                    <button class="btn btn-danger text-white" type="submit"  asp-route-id="@Model.ID"  asp-controller="ProductOrder" asp-action="Insert">
+                        
+                            <i class="bi bi-cart fs-3 my-3"></i> Add To Cart
+                        
+                    </button>
+                </div>
+                </form>
+                
+
+        </div>
+    </div>
+</div>
+@section Count{
+    @ViewBag.count
+}
+@section Collection{
+    @foreach (var item in ViewBag.SubCategory)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductBySubcategory" asp-route-id="@item.ID">@item.SubCategoryName</a></li>
+        }
+        <hr/>
+        @if(User.IsInRole("Admin"))
+        {
+        <li><a class="dropdown-item" asp-controller="SubCategory" asp-action="New" >Add New Collection</a></li>
+        }
+}
+
+@section Category{
+    @foreach (var item in ViewBag.Category)
+        {
+        <li class="nav-item">
+            <a asp-controller="Product" asp-action="ProductBycategory" asp-route-id="@item.ID" class="nav-link">@item.CategoryName</a>
+        </li>
+        }
+}

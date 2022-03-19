@@ -1,0 +1,8 @@
+﻿@model List<SubCategory>
+
+<div class="d-flex flex-row  flex-wrap">
+@foreach(var item in Model)
+{
+    <button name="SubCategoryName">@item.SubCategoryName</button>
+}
+</div>

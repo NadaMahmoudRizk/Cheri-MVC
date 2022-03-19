@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-right: calc(var(--bs-gutter-x)/ -2);
+    margin-left: calc(var(--bs-gutter-x)/ -2);
+}
+
+hr {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.dot_design {
+    color: orange;
+    font-size: 4rem;
+}
+
+.logo {
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+}
+
+.button {
+    background-color: orange;
+    outline: 0;
+}
+
+.bi-heart,
+.bi-cart {
+    font-size: 2rem;
+}
+
+.badge {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+    background-color: #c67605;
+}
+
+.lblCartCount {
+    font-size: 1rem;
+    background: #ff9100;
+    color: #fff;
+    padding: 3px 5px;
+    vertical-align: top;
+    margin-left: -23px;
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: black;
+    text-decoration: none;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.active,
+.nav-link:hover {
+    background-color: orange!important;
+    color: white!important;
+}
+
+button {
+    border: 0;
+    outline: 0;
+}
+
+a:hover {
+    color: orange;
+}
+
+.img {
+    width: 400px;
+    height: 300px;
+}
+
+.zoom {
+    transition: transform .2s;
+    margin: 0 auto;
+}
+
+.zoom:hover {
+    transform: scale(1.2);
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+p {
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+}
+
+.MenImg {
+    float: right!important;
+}
+
+footer {
+    background-color: rgba(241, 240, 240, 0.952);
+}
+
+.card:hover {
+    box-shadow: 5px 10px #bebebe59;
+}
+
+#btn-Size:hover{
+    background-color:orange!important;
+}

@@ -1,0 +1,17 @@
+﻿@model List<Product>
+<div class="container">
+    <div class="row">
+    @foreach (var item in Model)
+   {
+           <div class="col-lg-4">
+               <div class="card" style="width: 18rem;">
+               <img src="~/Images/@item.Image" class="card-img-top" alt="..." width="250" height="300">
+                 <div class="card-body">
+                     <a href="/Product/Details/@item.ID" class="btn btn-primary">Details</a>
+                  </div>
+</div>
+           </div>
+   }
+   </div>
+</div>
+
